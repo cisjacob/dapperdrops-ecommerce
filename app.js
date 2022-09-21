@@ -1,12 +1,11 @@
-const e = require('express');
-
 const express = require('express'),
-bodyParser = require('body-parser'),
-ejs = require('ejs'),
-app = express();
+    bodyParser = require('body-parser'),
+    ejs = require('ejs'),
+    date = require(__dirname + '/date.js'),
+    app = express();
 
-let items = ["Buy food", "Cook food", "Eat food"];
-let workItems = [];
+const items = ["Buy food", "Cook food", "Eat food"],
+    workItems = [];
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({
@@ -15,16 +14,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 app.get("/", function(req, res){
-    let today = new Date();
-
-    let options = {
-        weekday: "long",
-        day: "numeric",
-        month: "long"
-    };
-
-    var day = today.toLocaleDateString("en-US", options);
-
+    const day = date.getDate();
     res.render("list", {listTitle: day, newListItems: items});
 });
 
